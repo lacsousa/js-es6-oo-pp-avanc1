@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Negociações</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
-    
+
 </head>
+
 <body class="container">
-    
+
     <h1 class="text-center">Negociações</h1>
-    
+
     <form class="form">
-        
+
         <div class="form-group">
             <label for="data">Data</label>
-            <input type="date" id="data" class="form-control" required autofocus/>        
-        </div>    
-        
+            <input type="date" id="data" class="form-control" required autofocus />
+        </div>
+
         <div class="form-group">
             <label for="quantidade">Quantidade</label>
-            <input type="number" min="1" step="1" id="quantidade" class="form-control" value="1" required/>
+            <input type="number" min="1" step="1" id="quantidade" class="form-control" value="1" required />
         </div>
-        
+
         <div class="form-group">
             <label for="valor">Valor</label>
-            <input id="valor" type="number" class="form-control"  min="0.01" step="0.01" value="0.0" required />
+            <input id="valor" type="number" class="form-control" min="0.01" step="0.01" value="0.0" required />
         </div>
-        
+
         <button class="btn btn-primary" type="submit">Incluir</button>
     </form>
-    
+
     <div class="text-center">
         <button class="btn btn-primary text-center" type="button">
             Importar Negociações
@@ -38,10 +40,10 @@
         <button class="btn btn-primary text-center" type="button">
             Apagar
         </button>
-    </div> 
+    </div>
     <br>
     <br>
-    
+
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
@@ -51,27 +53,67 @@
                 <th>VOLUME</th>
             </tr>
         </thead>
-        
+
         <tbody>
         </tbody>
-        
+
         <tfoot>
         </tfoot>
     </table>
     <!--<script src="js/index.js"></script> -->
     <script src="js/app/models/Negociacao.js"></script>
+    <script src="../exemplos/Conta.js"></script>
 
     <script>
-
         var n1 = new Negociacao(new Date(), 5, 700);
-        
+        n1.quantidade = 1000;
+        /*
+        Não muda.
+        Isto acontece quando a propriedade é um getter (ou seja, é de leitura), 
+        não podemos atribuir para a mesma um valor. Mas ainda podemos acessá-la 
+        usando o n1._quantidade.
+        */
+        n1._quantidade = 50;
         console.log(n1);
-        console.log(n1.obtemVolume());
-    
-        var n2 = new Negociacao();
-        console.log(n2);
-    
+        console.log(n1.volume);
     </script>
 
+    <script>
+        var n2 = new Negociacao(new Date(), 5, 800);
+
+        console.log(Object.isFrozen(n2));
+        Object.freeze(n2); // Congela o objeto
+        console.log(Object.isFrozen(n2));
+        n2._quantidade = 500;
+        console.log(n2);
+        console.log(n2.volume);
+    </script>
+
+    <script>
+        var n3 = new Negociacao(new Date(), 4, 300);
+
+        console.log(n3.data);
+        n3.data.setDate(11);
+        console.log(n3.data);
+        /*
+            O Object.freeze é shallow (razo). ele fica na superfície
+            Como data é um Object ele permite que a data seja alterada
+        */
+    </script>
+
+    <script>
+        let conta = new Conta('Mingau', 171);
+        conta.saldo += 500;
+        conta.deposita(100);
+        conta.deposita(200);
+        console.log(conta);
+        conta.titular = 'Luciano';
+        console.log(conta.titular);
+        /*
+        O titular continuará a ser Mingau, porque conta.titular é uma propriedade getter, 
+        que não aceita receber valores.
+        */
+    </script>
 </body>
+
 </html>
