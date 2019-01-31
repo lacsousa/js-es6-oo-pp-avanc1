@@ -17,3 +17,10 @@ maiorNumero = function () {
 maiorNumero(numeros);
 
 console.log(maiorP);
+
+let data1 = new Date(['2016', '11', '12']);
+let data2 = new Date();
+console.log(data1);
+console.log(data2);
+
+

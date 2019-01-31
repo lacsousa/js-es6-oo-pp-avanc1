@@ -1,7 +1,7 @@
 class Negociacao{
 
     constructor(data, quantidade, valor){
-        this._data = data;
+        this._data = new Date(data);
         this._quantidade = quantidade;
         this._valor = valor;
         Object.freeze(this); // Protegendo o Objeto, 
