@@ -8,6 +8,8 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
+        this._listaNegociacoes = new ListaNegociacoes();
+
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
         // 5000 negociações
@@ -15,17 +17,8 @@ class NegociacaoController {
 
     adiciona(event){
         event.preventDefault();
-        console.log('Passei no Controller de Negociação');
-     
-        // console.log(this._inputData.value);
-        // console.log(this._inputQuantidade.value);
-        // console.log(this._inputValor.value);
-
-        // Problema com datas
-        //Vamos usar o Spread ( ... ) ( oeprador ES6 que separa os parâmetros do construtor)
-
       
-        let data = DateHelper.textoParaData(this._inputData.value);
+        //let data = DateHelper.textoParaData(this._inputData.value);
             
         /*
         split('-')
@@ -37,17 +30,32 @@ class NegociacaoController {
         // inicia com 0 ( Janeiro )
         console.log(data);
 */
-        let negociacao = new Negociacao(data,
-            this._inputQuantidade.value, this._inputValor.value);
+        // let negociacao = new Negociacao(data,
+            // this._inputQuantidade.value, this._inputValor.value);
 
-        console.log(negociacao);
-
-        console.log(DateHelper.dataParaTexto(negociacao.data));
+        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._limpaFormulario();
+        console.log(this._listaNegociacoes.negociacoes);
+        // console.log(DateHelper.dataParaTexto(negociacao.data));
     }
-
     /*
         .map( (item, indice) function {
             return item - indice % 2;
         }));
     */
+
+   _limpaFormulario() {
+        this._inputData.value = '';
+        this._inputQuantidade.value = 1;
+        this._inputValor.value = 0.0;
+
+        this._inputData.focus();
+   }
+
+   _criaNegociacao(){
+        return new Negociacao(
+            DateHelper.textoParaData(this._inputData.value),
+            this._inputQuantidade.value, 
+            this._inputValor.value);
+   }
 }
