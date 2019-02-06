@@ -34,6 +34,11 @@ class NegociacaoController {
             // this._inputQuantidade.value, this._inputValor.value);
 
         this._listaNegociacoes.adiciona(this._criaNegociacao());
+        
+        // Cap.04.06 
+        // this._listaNegociacoes.negociacoes.length = 0;
+        // this._listaNegociacoes.negociacoes.push(this._criaNegociacao);
+        
         this._limpaFormulario();
         console.log(this._listaNegociacoes.negociacoes);
         // console.log(DateHelper.dataParaTexto(negociacao.data));

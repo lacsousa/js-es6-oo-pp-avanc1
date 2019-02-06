@@ -55,3 +55,13 @@ function somaDoisNumeros(numero1, numero2) {
 let num = [10,30];
 console.log(somaDoisNumeros(num[0], num[1]));
 console.log(somaDoisNumeros(...num));
+//---------------------------------------------------------------------
+function exibeNoConsole(lista) {
+    lista.forEach(item => console.log(item));
+}
+
+let listaDeNomes1 = ['Flávio', 'Rogers', 'Júlia'];
+let listaDeNomes2 = ['Vieira', 'Fernanda', 'Gerson'];
+exibeNoConsole([].concat(listaDeNomes1, listaDeNomes2, 'Rômulo'));
+
+//---------------------------------------------------------------------

@@ -4,7 +4,7 @@ class DateHelper {
         throw new Error('A Classe DateHelper não pode ser instanciada!');
     }
 
-    // Template Sring usa o back stick ( crase) ` 
+    // Template Sring usa o (backtick, em inglês) ( crase)` 
     static dataParaTexto(data) {
         return `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`;
     }
