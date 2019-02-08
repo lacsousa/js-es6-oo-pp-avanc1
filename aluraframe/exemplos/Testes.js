@@ -32,7 +32,7 @@ console.log(numeros1);
 console.log(numeros2);
 
 // Maneira Não funcional do mesmo algoritmo
-
+// ---------------
 let numeros3 = [3,2,11,20,8,7];
 let novosNumeros = [];
 
