@@ -9,7 +9,8 @@ class NegociacaoController {
         this._inputValor = $('#valor');
 
         this._listaNegociacoes = new ListaNegociacoes();
-
+        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+        this._negociacoesView._update(this._listaNegociacoes);
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
         // 5000 negociações
@@ -39,8 +40,10 @@ class NegociacaoController {
         // this._listaNegociacoes.negociacoes.length = 0;
         // this._listaNegociacoes.negociacoes.push(this._criaNegociacao);
         
+        this._negociacoesView._update(this._listaNegociacoes);
+
         this._limpaFormulario();
-        console.log(this._listaNegociacoes.negociacoes);
+        // console.log(this._listaNegociacoes.negociacoes);
         // console.log(DateHelper.dataParaTexto(negociacao.data));
     }
     /*
