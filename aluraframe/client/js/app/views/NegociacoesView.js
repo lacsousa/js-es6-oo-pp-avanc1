@@ -34,7 +34,7 @@ class NegociacoesView {
                 </tbody>
 
                 <tfoot>
-                    <td colspan="3"></td>
+                    <td>Totais dos Volumes </br>(diferentes formas)</td>
                     <td>${
                         (function() {
                 
@@ -47,6 +47,17 @@ class NegociacoesView {
                        })()
                     }
                     </td>
+                    <td>${ // De forma funcional
+                        model.negociacoes.reduce(function(total,n){
+                            return total + n.volume;
+                        }, 0.0)
+                    } 
+                    </td>
+                    <td>${ // Arrow functions
+                        model.negociacoes.reduce((total,n) => total + n.volume, 0.0)
+                    }
+                    </td>
+
                 </tfoot>
             </table>`;
     }
