@@ -18,12 +18,12 @@ class Conta {
     get titular() {
         return this._titular;
     }
-
-    get conta() {
-        return this._conta;
-    }
     
     // Podemos criar uma espécie de método, mas que é acessado
     // como se fosse uma propriedade.
+    get conta() {
+        return this._conta;
+    }
+
 }
 

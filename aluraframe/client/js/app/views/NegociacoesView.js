@@ -1,10 +1,10 @@
-class NegociacoesView { 
+class NegociacoesView extends View{ 
 
     constructor(elemento){
-        this._elemento = elemento;
+        super(elemento);
     }
-
-    _template(model) { 
+   
+    template(model) { 
         // Se o retorno não fosse uma template string, não poderíamos "identar" 
         // o código desta forma
         return `
@@ -62,7 +62,5 @@ class NegociacoesView {
             </table>`;
     }
 
-    _update(model){
-        this._elemento.innerHTML = this._template(model);
-    }
+  
 }
