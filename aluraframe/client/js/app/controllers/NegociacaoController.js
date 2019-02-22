@@ -70,4 +70,11 @@ class NegociacaoController {
             this._inputQuantidade.value, 
             this._inputValor.value);
    }
+
+   apaga(){
+       this._listaNegociacoes.esvazia();
+       this._negociacoesView.update(this._listaNegociacoes);
+       this._mensagem.texto = 'Lista de negociações foi removida com sucesso!';
+       this._mensagemView.update(this._mensagem);
+   }
 }
