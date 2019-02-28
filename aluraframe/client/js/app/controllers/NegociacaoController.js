@@ -8,8 +8,13 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
-        this._listaNegociacoes = new ListaNegociacoes();
+        this._listaNegociacoes = new ListaNegociacoes(function(model){
+            console.log(this);
+            this._negociacoesView.update(model);
+        });
+
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+        // primeira update
         this._negociacoesView.update(this._listaNegociacoes);
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
@@ -41,7 +46,9 @@ class NegociacaoController {
         // Cap.04.06 
         // this._listaNegociacoes.negociacoes.length = 0;
         // this._listaNegociacoes.negociacoes.push(this._criaNegociacao);
-        this._negociacoesView.update(this._listaNegociacoes);
+        
+        // Depois de criada a armadilha vamos comentar o update aqui
+        // this._negociacoesView.update(this._listaNegociacoes);
         
         this._mensagem.texto = "Negociação adiconada com sucesso!";
         this._mensagemView.update(this._mensagem)
@@ -73,7 +80,7 @@ class NegociacaoController {
 
    apaga(){
        this._listaNegociacoes.esvazia();
-       this._negociacoesView.update(this._listaNegociacoes);
+    //    this._negociacoesView.update(this._listaNegociacoes);
        this._mensagem.texto = 'Lista de negociações foi removida com sucesso!';
        this._mensagemView.update(this._mensagem);
    }
