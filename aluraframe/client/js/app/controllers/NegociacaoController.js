@@ -8,8 +8,10 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
-        this._listaNegociacoes = new ListaNegociacoes(function(model){
-            console.log(this);
+        this._listaNegociacoes = new ListaNegociacoes(model => {
+            console.log(this); // Quando trocamos o function pelo arrow function (AF)=>
+                                // Ele mantém o this. Pq numa AF o o escopo de this 
+                                // é léxico, em vez de ser dinâmico como a outra função
             this._negociacoesView.update(model);
         });
 
@@ -51,7 +53,7 @@ class NegociacaoController {
         // this._negociacoesView.update(this._listaNegociacoes);
         
         this._mensagem.texto = "Negociação adiconada com sucesso!";
-        this._mensagemView.update(this._mensagem)
+        this._mensagemView.update(this._mensagem);
 
         this._limpaFormulario();
         // console.log(this._listaNegociacoes.negociacoes);

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exemplos 01 Arrow Function</title>
+</head>
+<body>
+
+    <h1>TITULO</h1>
+    <p>PARAGRAFO</p>
+    <div>DADOS</div>
+
+    <script>
+        console.log(this); // é window
+
+        // let exibeConteudo = function() {
+        //     console.log(this);
+        //     alert(this.textContent);
+        // };
+
+        // Vamos testar o this léxico da Arrow Function
+        let exibeConteudo = () => {
+            console.log(this);
+            alert(this.textContent);
+        };
+
+        $ = document.querySelector.bind(document);
+
+        $('h1').addEventListener('click', exibeConteudo);
+
+        $('p').addEventListener('click', exibeConteudo);
+
+        $('div').addEventListener('click', exibeConteudo);
+
+    </script>
+
+    <script>
+        let carro = {
+            velocidade: 100,
+            acelera : () =>{
+                console.log(this);
+                console.log(`Carro a ${this.velocidade} km por hora!`);
+            }
+        };
+        carro.acelera();
+    </script>
+    <script>
+        let objeto1 = {
+            nome : 'Bob'
+        };
+
+        let objeto2 = {
+            nome : 'Leo'
+        };
+
+        function exibeNome(){
+            console.log(this.nome);
+        }
+
+        function exibeNome2(prefixo, sufixo){
+            console.log(this.nome);
+        }
+
+        exibeNome();
+
+        Reflect.apply(exibeNome, objeto1, []);
+        Reflect.apply(exibeNome, objeto2, []);
+
+        Reflect.apply(exibeNome2, objeto1, ['(', ')']); 
+        // Veja que agora estamos passando dois parâmetros para o método.
+    </script>
+</body>
+</html>

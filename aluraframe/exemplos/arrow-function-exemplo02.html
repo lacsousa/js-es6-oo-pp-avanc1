@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exemplo 02 Arrow Function - this Léxico</title>
+</head>
+<body>
+
+    <script>
+
+        class SistemaImpressao {
+
+            constructor() {
+                this._codigo = 2;
+            }
+
+            imprime(nomes) {
+
+                nomes.forEach(nome => {
+                    console.log(this);
+                    console.log(`${this._codigo}: ${nome}`);
+                });
+            }
+        }
+
+        let nomes = ['Flávio', 'Nico', 'Douglas'];
+        let si = new SistemaImpressao();
+        si.imprime(nomes);
+
+        class Relogio {
+
+        constructor() {
+            this._segundos = 0;
+
+            setInterval( () => {
+                console.log(++this._segundos);
+            }, 1000);
+        }
+    }
+    var relogio = new Relogio();
+
+
+    </script>
+
+   
+</body>
+</html>
