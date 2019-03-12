@@ -1,26 +1,26 @@
-class ListaNegociacoes{
+class ListaNegociacoes {
 
-    constructor(armadilha){
-    // constructor(contexto, armadilha){
-    this._negociacoes = [];
-        this._armadilha = armadilha;
+    constructor(armadilha) {
+        // constructor(contexto, armadilha){
+        this._negociacoes = [];
+        // this._armadilha = armadilha;
         // this._contexto = contexto;
     }
 
-    adiciona(negociacao){
+    adiciona(negociacao) {
         this._negociacoes.push(negociacao);
-         this._armadilha(this);
+        // this._armadilha(this);
         // Reflect.apply(this._armadilha, this._contexto, [this]); //API de Reflexão do JavaScript
     }
 
-    get negociacoes() { 
+    get negociacoes() {
         // Programação Defensiva
         return [].concat(this._negociacoes);
     }
 
-    esvazia(){
+    esvazia() {
         this._negociacoes = [];
-        this._armadilha(this);
+        // this._armadilha(this);
         // Reflect.apply(this._armadilha, this._contexto, [this]); // JsAvancII-Cap1-3
     }
 }

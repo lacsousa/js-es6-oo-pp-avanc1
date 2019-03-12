@@ -8,12 +8,15 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
+        /* Começar a trabalhar com o Proxy
         this._listaNegociacoes = new ListaNegociacoes(model => {
             console.log(this); // Quando trocamos o function pelo arrow function (AF)=>
                                 // Ele mantém o this. Pq numa AF o o escopo de this 
                                 // é léxico, em vez de ser dinâmico como a outra função
             this._negociacoesView.update(model);
         });
+
+        */
 
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
         // primeira update
