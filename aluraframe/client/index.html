@@ -125,7 +125,7 @@
     </script>
 
     <script>
-
+        //armadiha de leitura
         let negociacao = new Proxy(new Negociacao(new Date(), 1, 100), {
 
             get: function(target, prop, receiver) {
@@ -137,6 +137,46 @@
         console.log(negociacao.quantidade);
         console.log(negociacao.valor);
     </script>
+
+    <script>
+        //armadiha de escrita
+        let negociacaoSet = new Proxy(new Negociacao(new Date(), 1, 100), {
+
+            set: function(target, prop, value, receiver) {
+
+                console.log(`valor anterior: ${target[prop]}, novo valor: ${value} `);
+                return Reflect.set(target, prop, value, receiver);
+            }
+        });
+        negociacaoSet._quantidade = 10;
+        negociacaoSet._valor = 200;
+    </script>
+
+    <script>
+        // Resolvendo o problema do método adiciona, 
+        // pq um método não disapara o set: function
+
+        let lista = new Proxy(new ListaNegociacoes(),{
+            get: function(target, prop, receiver){
+               if (['adiciona', 'esvazia'].includes(prop) && typeof(target[prop] == typeof(Function))){
+
+                    // trocar o meu método do Proxy por outro método
+                    return function () {
+                        // Tem que ser function para ter o this dinâmico. 
+                        //Não pode ser arrow function que possui escopo léxico.
+                        console.log(`a propriedade "${prop}" foi interceptada`);
+                        return Reflect.apply(target[prop], target, arguments);
+                    }
+               }
+               return Reflect.get(target, prop, receiver);
+            }
+        });
+
+        lista.adiciona(new Negociacao(new Negociacao(new Date(), 2, 50)));
+        // Quando o JS chama um método, ele sempre chama um getter e executa um Reflect.apply
+        lista.esvazia();
+    </script>
+
 </body>
 
 </html>
