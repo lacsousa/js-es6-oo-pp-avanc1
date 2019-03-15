@@ -65,3 +65,13 @@ let listaDeNomes2 = ['Vieira', 'Fernanda', 'Gerson'];
 exibeNoConsole([].concat(listaDeNomes1, listaDeNomes2, 'Rômulo'));
 
 //---------------------------------------------------------------------
+function exibeNomeCompleto() {
+    //Só para exemplificar a chamada sem passar parâmetros
+    console.log(`${arguments[0]} ${arguments[1]}`);
+}
+  
+  exibeNomeCompleto('Luciano', 'Cordeiro');
+
+
+
+//---------------------------------------------------------------------
