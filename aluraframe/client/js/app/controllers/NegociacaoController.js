@@ -8,23 +8,11 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
-        let self = this;
-        this._listaNegociacoes = new Proxy(new ListaNegociacoes(),{
-            get: function(target, prop, receiver){
-               if (['adiciona', 'esvazia'].includes(prop) && typeof(target[prop] == typeof(Function))){
-
-                    // trocar o meu método do Proxy por outro método
-                    return function () {
-                        // Tem que ser function para ter o this dinâmico. 
-                        //Não pode ser arrow function que possui escopo léxico.
-                        console.log(`a propriedade "${prop}" foi interceptada`);
-                        Reflect.apply(target[prop], target, arguments);
-                        self._negociacoesView.update(target);
-                    }
-               }
-               return Reflect.get(target, prop, receiver);
-            }
-        });
+        this._listaNegociacoes = ProxyFactory.create(
+            new ListaNegociacoes(),
+            ['adiciona', 'esvazia'], model =>
+                this._negociacoesView.update(model)); 
+            
 
         /* Começar a trabalhar com o Proxy
         this._listaNegociacoes = new ListaNegociacoes(model => {
@@ -42,9 +30,13 @@ class NegociacaoController {
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
         // 5000 negociações
-        this._mensagem = new Mensagem();
+
+        //Cap.3.1
+        this._mensagem = ProxyFactory.create(
+            new Mensagem(),
+            ['texto'], model =>
+                this._mensagemView.update(model));
         this._mensagemView = new MensagemView($('#mensagemView'));
-        this._mensagemView.update(this._mensagem);
     }
 
     adiciona(event){
@@ -74,8 +66,6 @@ class NegociacaoController {
         // this._negociacoesView.update(this._listaNegociacoes);
         
         this._mensagem.texto = "Negociação adiconada com sucesso!";
-        this._mensagemView.update(this._mensagem);
-
         this._limpaFormulario();
         // console.log(this._listaNegociacoes.negociacoes);
         // console.log(DateHelper.dataParaTexto(negociacao.data));
@@ -105,6 +95,5 @@ class NegociacaoController {
        this._listaNegociacoes.esvazia();
     //    this._negociacoesView.update(this._listaNegociacoes);
        this._mensagem.texto = 'Lista de negociações foi removida com sucesso!';
-       this._mensagemView.update(this._mensagem);
    }
 }
