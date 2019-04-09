@@ -14,9 +14,7 @@ class NegociacaoController {
                                 // Ele mantém o this. Pq numa AF o o escopo de this 
                                 // é léxico, em vez de ser dinâmico como a outra função
             this._negociacoesView.update(model);
-        });
-
-        */
+        });   */
 
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
 
@@ -25,7 +23,6 @@ class NegociacaoController {
             this._negociacoesView, 
             ['adiciona', 'esvazia']); 
             
-        
         // primeira update
         // Retirado no Cap. 3.3. ----->   this._negociacoesView.update(this._listaNegociacoes);
         // a estratégia de mudar de let ( variáveis) para o this
