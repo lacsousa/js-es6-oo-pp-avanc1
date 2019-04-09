@@ -6,7 +6,7 @@ class ProxyFactory {
 
             get: function (target, prop, receiver) {
 
-                if (props.includes(prop) && typeof (target[prop] == typeof (Function))) {
+                if (props.includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
 
                     // trocar o meu método do Proxy por outro método
                     return function () {
@@ -30,5 +30,9 @@ class ProxyFactory {
                 return Reflect.set(target, prop, value, receiver);
             }
         });
+    }
+
+    static _ehFuncao(func) {
+        return typeof(func) == typeof(Function);
     }
 }
