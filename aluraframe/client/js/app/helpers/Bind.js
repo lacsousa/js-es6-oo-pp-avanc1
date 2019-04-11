@@ -1,6 +1,8 @@
 class Bind{
 
-    constructor(model, view, props){
+    // ... Dessa forma é o REST Operator e não o Spread
+    constructor(model, view, ...props){
+
         let proxy = ProxyFactory.create(model, props, model => {
             view.update(model);
         });

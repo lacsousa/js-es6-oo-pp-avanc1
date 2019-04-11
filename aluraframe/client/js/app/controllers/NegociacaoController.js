@@ -16,26 +16,21 @@ class NegociacaoController {
             this._negociacoesView.update(model);
         });   */
 
-        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
-
         this._listaNegociacoes = new Bind ( 
             new ListaNegociacoes(),
-            this._negociacoesView, 
-            ['adiciona', 'esvazia']); 
+            new NegociacoesView($('#negociacoesView')), 
+            'adiciona', 'esvazia'); 
             
         // primeira update
         // Retirado no Cap. 3.3. ----->   this._negociacoesView.update(this._listaNegociacoes);
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
-        // 5000 negociações
-
-        //Cap.3.1
-        this._mensagemView = new MensagemView($('#mensagemView'));
+        // 5000 negociações  
 
         this._mensagem = new Bind ( 
             new Mensagem(),
-            this._mensagemView, 
-            ['texto']);
+            new MensagemView($('#mensagemView')), 
+            'texto');
     }
 
     adiciona(event){

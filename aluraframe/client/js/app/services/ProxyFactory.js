@@ -13,21 +13,23 @@ class ProxyFactory {
                         // Tem que ser function para ter o this dinâmico. 
                         //Não pode ser arrow function que possui escopo léxico.
                         console.log(`a propriedade "${prop}" foi interceptada`);
-                        Reflect.apply(target[prop], target, arguments);
-                        return acao(target);
-                    }
+                        let retorno = Reflect.apply(target[prop], target, arguments);
+                        acao(target);
+                        return retorno;
+                    };
                 }
                 return Reflect.get(target, prop, receiver);
             },
 
             set(target, prop, value, receiver){
 
+                let retorno = Reflect.set(target, prop, value, receiver);
                 if(props.includes(prop)){
-                    target[prop] = value;
+                    // target[prop] = value;
                     acao(target);
                 }
                 
-                return Reflect.set(target, prop, value, receiver);
+                return retorno;
             }
         });
     }
