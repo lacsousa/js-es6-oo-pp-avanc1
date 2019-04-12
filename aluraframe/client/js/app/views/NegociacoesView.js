@@ -53,8 +53,10 @@ class NegociacoesView extends View{
                         }, 0.0)
                     } 
                     </td>
-                    <td>${ // Arrow functions
-                        model.negociacoes.reduce((total,n) => total + n.volume, 0.0)
+                    <td>
+                     ${
+                         //model.negociacoes.reduce((total,n) => total + n.volume, 0.0) 
+                        model.volumeTotal
                     }
                     </td>
 

@@ -23,4 +23,9 @@ class ListaNegociacoes {
         // this._armadilha(this);
         // Reflect.apply(this._armadilha, this._contexto, [this]); // JsAvancII-Cap1-3
     }
+
+    // novo método
+    get volumeTotal() {
+        return this._negociacoes.reduce((total, n) => total + n.volume, 0.0);
+     }
 }
