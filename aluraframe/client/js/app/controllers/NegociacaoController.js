@@ -1,6 +1,9 @@
 class NegociacaoController {
 
     constructor() {
+
+        this._ordemAtual = ''; // quando a página for carregada, não tem critério. Só passa a ter quando ele começa a clicar nas colunas
+
         let $ = document.querySelector.bind(document);
         // Forma de implementar um micro Framework
         // Como no jQuery
@@ -19,7 +22,7 @@ class NegociacaoController {
         this._listaNegociacoes = new Bind(
             new ListaNegociacoes(),
             new NegociacoesView($('#negociacoesView')),
-            'adiciona', 'esvazia');
+            'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
 
         // primeira update
         // Retirado no Cap. 3.3. ----->   this._negociacoesView.update(this._listaNegociacoes);
@@ -74,11 +77,8 @@ class NegociacaoController {
         // Trabalhando com o Promise
         let service = new NegociacaoService();
 
-        Promise.all([
-            service.obterNegociacoesDaSemana(),
-            service.obterNegociacoesDaSemanaAnterior(),
-            service.obterNegociacoesDaSemanaRetrasada()]
-        ).then(negociacoes => {
+        service.obterNegociacoes()
+        .then(negociacoes => {
             negociacoes
                 .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
                 .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
@@ -157,5 +157,14 @@ class NegociacaoController {
         this._listaNegociacoes.esvazia();
         //    this._negociacoesView.update(this._listaNegociacoes);
         this._mensagem.texto = 'Lista de negociações foi removida com sucesso!';
+    }
+
+    ordena(coluna) {
+        if(this._ordemAtual == coluna) {
+            this._listaNegociacoes.inverteOrdem();
+        } else {
+            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);    
+        }
+        this._ordemAtual = coluna;
     }
 }
