@@ -35,7 +35,7 @@ var ConnectionFactory = (function () {
                         // Monkey Patch
                         close = connection.close.bind(connection);
                         connection.close = function(){
-                            throw new Error('Você não pode fechar diretmente a conexão');
+                            throw new Error('Você não pode fechar diretamente a conexão');
                         };
                     }
                     resolve(connection);
