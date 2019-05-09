@@ -34,39 +34,61 @@ class NegociacaoController {
             new Mensagem(),
             new MensagemView($('#mensagemView')),
             'texto');
+
+        ConnectionFactory
+            .getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.listaTodos())
+            .then(negociacoes =>
+                negociacoes.forEach(negociacao =>
+                    this._listaNegociacoes.adiciona(negociacao)));
+
     }
 
     adiciona(event) {
         event.preventDefault();
 
-        //let data = DateHelper.textoParaData(this._inputData.value);
-
-        /*
-        split('-')
-            // Arrow function 
-            // Vc retira o function e se vc só tiver 1 linha no bloco
-            // vc pode reduzir mais ainda 
-            .map((item, indice) => item - indice % 2 ));
-        // Tudo isso. porque o mês nesse Date
-        // inicia com 0 ( Janeiro )
-        console.log(data);
-*/
-        // let negociacao = new Negociacao(data,
-        // this._inputQuantidade.value, this._inputValor.value);
-
-        this._listaNegociacoes.adiciona(this._criaNegociacao());
-        // Cap.04.06 
-        // this._listaNegociacoes.negociacoes.length = 0;
-        // this._listaNegociacoes.negociacoes.push(this._criaNegociacao);
-
-        // Depois de criada a armadilha vamos comentar o update aqui
-        // this._negociacoesView.update(this._listaNegociacoes);
-
-        this._mensagem.texto = "Negociação adiconada com sucesso!";
-        this._limpaFormulario();
-        // console.log(this._listaNegociacoes.negociacoes);
-        // console.log(DateHelper.dataParaTexto(negociacao.data));
+        ConnectionFactory
+            .getConnection()
+            .then(conexao => {
+                let negociacao = this._criaNegociacao();
+                new NegociacaoDao(conexao)
+                    .adiciona(negociacao)
+                    .then(() => {
+                        this._listaNegociacoes.adiciona(negociacao);
+                        this._mensagem.texto = "Negociação adiconada com sucesso!";
+                        this._limpaFormulario();
+                    });
+            })
+            .catch(erro => this._mensagem.texto = erro);
     }
+    //let data = DateHelper.textoParaData(this._inputData.value);
+
+    /*
+            split('-')
+                // Arrow function 
+                // Vc retira o function e se vc só tiver 1 linha no bloco
+                // vc pode reduzir mais ainda 
+                .map((item, indice) => item - indice % 2 ));
+            // Tudo isso. porque o mês nesse Date
+            // inicia com 0 ( Janeiro )
+            console.log(data);
+    */
+    // let negociacao = new Negociacao(data,
+    // this._inputQuantidade.value, this._inputValor.value);
+
+    // Cap.04.06 
+    // this._listaNegociacoes.negociacoes.length = 0;
+    // this._listaNegociacoes.negociacoes.push(this._criaNegociacao);
+
+    // Depois de criada a armadilha vamos comentar o update aqui
+    // this._negociacoesView.update(this._listaNegociacoes);
+
+    // this._mensagem.texto = "Negociação adiconada com sucesso!";
+    // this._limpaFormulario();
+    // console.log(this._listaNegociacoes.negociacoes);
+    // console.log(DateHelper.dataParaTexto(negociacao.data));
+
     /*
         .map( (item, indice) function {
             return item - indice % 2;
@@ -78,13 +100,13 @@ class NegociacaoController {
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
-        .then(negociacoes => {
-            negociacoes
-                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
-                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-            this._mensagem.texto = 'Negociações importadas com sucesso';    
-            console.log(negociacoes);
-        }).catch(erro => this._mensagem.texto = erro);
+            .then(negociacoes => {
+                negociacoes
+                    .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                    .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações importadas com sucesso';
+                console.log(negociacoes);
+            }).catch(erro => this._mensagem.texto = erro);
 
         /* 2a. REFATORAÇÃO acima
         service.obterNegociacoesDaSemana()
@@ -149,8 +171,8 @@ class NegociacaoController {
     _criaNegociacao() {
         return new Negociacao(
             DateHelper.textoParaData(this._inputData.value),
-            this._inputQuantidade.value,
-            this._inputValor.value);
+            parseInt(this._inputQuantidade.value),
+            parseFloat(this._inputValor.value));
     }
 
     apaga() {
@@ -160,10 +182,10 @@ class NegociacaoController {
     }
 
     ordena(coluna) {
-        if(this._ordemAtual == coluna) {
+        if (this._ordemAtual == coluna) {
             this._listaNegociacoes.inverteOrdem();
         } else {
-            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);    
+            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);
         }
         this._ordemAtual = coluna;
     }
