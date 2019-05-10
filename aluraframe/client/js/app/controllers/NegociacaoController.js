@@ -41,7 +41,10 @@ class NegociacaoController {
             .then(dao => dao.listaTodos())
             .then(negociacoes =>
                 negociacoes.forEach(negociacao =>
-                    this._listaNegociacoes.adiciona(negociacao)));
+                    this._listaNegociacoes.adiciona(negociacao)))
+            .catch(erro => {
+                this._mensagem.texto = erro;
+            });        
 
     }
 
@@ -176,9 +179,17 @@ class NegociacaoController {
     }
 
     apaga() {
-        this._listaNegociacoes.esvazia();
-        //    this._negociacoesView.update(this._listaNegociacoes);
-        this._mensagem.texto = 'Lista de negociações foi removida com sucesso!';
+        ConnectionFactory
+            .getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.apagaTodos())
+            .then(mensagem => {
+                this._listaNegociacoes.esvazia();
+                //    this._negociacoesView.update(this._listaNegociacoes);
+                this._mensagem.texto = mensagem;
+            });
+
+        
     }
 
     ordena(coluna) {
