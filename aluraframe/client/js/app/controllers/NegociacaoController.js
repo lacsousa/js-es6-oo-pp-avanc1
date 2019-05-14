@@ -103,6 +103,13 @@ class NegociacaoController {
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
+                //filter - filtra o resultado do que será disponibilizado depois
+                // critério para um Array
+            .then(negociacoes => negociacoes.filter(negociacao => 
+                !this._listaNegociacoes.negociacoes.some(negociacaoExistente => 
+                    JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente))))
+            //Se vc tivesse colocado um Bloco { } vc teria que explicitar um "return" 
+            // para os dados irem para o bloco abaixo
             .then(negociacoes => {
                 negociacoes
                     .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
