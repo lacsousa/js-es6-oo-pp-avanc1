@@ -24,7 +24,7 @@ class NegociacaoController {
             new NegociacoesView($('#negociacoesView')),
             'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
 
-        // primeira update
+        // primeiro update
         // Retirado no Cap. 3.3. ----->   this._negociacoesView.update(this._listaNegociacoes);
         // a estratégia de mudar de let ( variáveis) para o this
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
@@ -35,22 +35,19 @@ class NegociacaoController {
             new MensagemView($('#mensagemView')),
             'texto');
 
+        this._service = new NegociacaoService();
         this._init();    
 
     }
 
     _init(){
 
-        ConnectionFactory
-        .getConnection()
-        .then(conexao => new NegociacaoDao(conexao))
-        .then(dao => dao.listaTodos())
+        this._service
+        .lista()
         .then(negociacoes =>
             negociacoes.forEach(negociacao =>
                 this._listaNegociacoes.adiciona(negociacao)))
-        .catch(erro => {
-            this._mensagem.texto = erro;
-        });        
+        .catch(erro => this._mensagem.texto = erro);        
 
 
         setInterval(() => {
@@ -108,19 +105,13 @@ class NegociacaoController {
 
     importaNegociacoes() {
         // Trabalhando com o Promise
-        let service = new NegociacaoService();
-
-        service.obterNegociacoes()
-                //filter - filtra o resultado do que será disponibilizado depois
-                // critério para um Array
-            .then(negociacoes => negociacoes.filter(negociacao => 
-                !this._listaNegociacoes.negociacoes.some(negociacaoExistente => 
-                    JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente))))
+        this._service
+            .importa(this._listaNegociacoes.negociacoes)
             //Se vc tivesse colocado um Bloco { } vc teria que explicitar um "return" 
             // para os dados irem para o bloco abaixo
             .then(negociacoes => {
                 negociacoes
-                    .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                    // .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
                     .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                 this._mensagem.texto = 'Negociações importadas com sucesso';
                 console.log(negociacoes);
@@ -194,10 +185,9 @@ class NegociacaoController {
     }
 
     apaga() {
-        ConnectionFactory
-            .getConnection()
-            .then(conexao => new NegociacaoDao(conexao))
-            .then(dao => dao.apagaTodos())
+
+        this._service
+            .apaga()
             .then(mensagem => {
                 this._listaNegociacoes.esvazia();
                 //    this._negociacoesView.update(this._listaNegociacoes);
