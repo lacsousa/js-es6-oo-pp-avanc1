@@ -1,65 +1,47 @@
-class HttpService {
+'use strict';
 
-    get(url) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-        return new Promise((resolve, reject) => {
-             //    alert('Importando negociações');
-            //Não estamos usando jQuery, usaremos JS Puro
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-            // Configurações
-            xhr.onreadystatechange = () => {
-                 // Precisa testar o status 200 
-                // Porque um erro é uma resposta válida
-                if(xhr.readyState == 4) {
-                    if(xhr.status == 200) {
-                        // JSON.parse - converte Texto num Objeto JS  
-                        // Para cada objeto converte para um instancia de negociacao
-                        // No novo array ( map ) vc percorre e adiciona 
-                        resolve(JSON.parse(xhr.responseText));
-
-                          // O Service não deve ter contato com a View
-                        // this._mensagem.texto = 'Negociações importadas da semana'; 
-                    }else{
-                        console.log(xhr.responseText);
-                        reject(xhr.responseText);
-                    }
-                }
-            };
-
-            xhr.send();
-            /* Estados Possíveis de uma requisição AJAX
-                0: requisição ainda não iniciada
-                1: conexão com o servidor estabelecida
-                2: requisição recebida
-                3: processando requisição
-                4: requisição está concluída e a resposta está pronta
-            */
-        });
-
+var HttpService = function () {
+    function HttpService() {
+        _classCallCheck(this, HttpService);
     }
 
+    _createClass(HttpService, [{
+        key: '_handleErrors',
+        value: function _handleErrors(res) {
+            if (!res.ok) throw new Error(res.statusText);
 
-    post(url, dado) {
+            return res;
+        }
+    }, {
+        key: 'get',
+        value: function get(url) {
+            var _this = this;
 
-        return new Promise((resolve, reject) => {
+            return fetch(url).then(function (res) {
+                return _this._handleErrors(res);
+            }).then(function (res) {
+                return res.json();
+            });
+        }
+    }, {
+        key: 'post',
+        value: function post(url, dado) {
+            var _this2 = this;
 
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onreadystatechange = () => {
+            return fetch(url, {
+                headers: { 'Content-type': 'application/json' },
+                method: 'post',
+                body: JSON.stringify(dado)
+            }).then(function (res) {
+                return _this2._handleErrors(res);
+            });
+        }
+    }]);
 
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else {
-                        reject(xhr.responseText);
-                    }
-                }
-            };
-            xhr.send(JSON.stringify(dado)); // usando JSON.stringifly para converter objeto em uma string no formato JSON.
-        });
-
-    }
-}
+    return HttpService;
+}();
+//# sourceMappingURL=HttpService.js.map
