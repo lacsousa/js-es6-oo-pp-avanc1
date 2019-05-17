@@ -135,13 +135,13 @@ var NegociacaoController = function () {
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                 })
                 .catch(erro => this._mensagem.texto = erro);
-             service.obterNegociacoesDaSemanaAnterior()
+              service.obterNegociacoesDaSemanaAnterior()
                 .then(negociacoes => {
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                 })
                 .catch(erro => this._mensagem.texto = erro);
-             service.obterNegociacoesDaSemanaRetrasada()
+              service.obterNegociacoesDaSemanaRetrasada()
                 .then(negociacoes => {
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
@@ -157,13 +157,13 @@ var NegociacaoController = function () {
                     return;
                 }
                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                 service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
+                  service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
                     if(erro){
                         this._mensagem.texto = erro;
                         return;
                     }
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                     service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
+                      service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
                         if(erro){
                             this._mensagem.texto = erro;
                             return;
