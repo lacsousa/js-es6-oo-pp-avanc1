@@ -1,4 +1,4 @@
-class Mensagem{
+export class Mensagem{
 
     constructor(texto=''){ //ES6 deixa vc passar um valor default se não 
                            // for passado nenhum valor 

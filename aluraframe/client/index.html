@@ -53,7 +53,19 @@
 
     </div>
     <!--<script src="js/index.js"></script> -->
-    <script src="js/polyfill/fetch.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
+    <!-- Quando vc usa o System Loader, não é mais necessário carregar os 
+       outros scripts. Você só precisa configurar o System 
+    -->
+
+    <script>
+        System.defaultJSExtensions = true;
+        System.import('js/app/boot').catch(function(err){
+            console.error(err);
+        });
+    </script>
+    <!-- script src="js/polyfill/fetch.js"></script>
+
     <script src="js/app/models/Negociacao.js"></script>
     <script src="js/app/dao/NegociacaoDao.js"></script>
     <script src="js/app/models/ListaNegociacoes.js"></script>
@@ -71,16 +83,18 @@
     <script src="js/app/views/MensagemView.js"></script>
 
     <script src="js/app/helpers/DateHelper.js"></script>
-    <script src="js/app/helpers/Bind.js"></script>
+    <script src="js/app/helpers/Bind.js"></script-->
 
 
 
     <script src="../exemplos/Conta.js"></script>
     <script src="../exemplos/Testes.js"></script>
 
-    <script>
+    <!-- 
+        Comentando após a entrada do System.js
+        script>
         let negociacaoController = new NegociacaoController();
-    </script>
+    </script-->
 
     <script>
         var n1 = new Negociacao(new Date(), 5, 700);

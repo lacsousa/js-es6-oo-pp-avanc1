@@ -1,10 +1,31 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.NegociacaoController = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ListaNegociacoes = require('../models/ListaNegociacoes');
+
+var _Mensagem = require('../models/Mensagem');
+
+var _NegociacoesView = require('../views/NegociacoesView');
+
+var _MensagemView = require('../views/MensagemView');
+
+var _NegociacaoService = require('../services/NegociacaoService');
+
+var _DateHelper = require('../helpers/DateHelper');
+
+var _Bind = require('../helpers/Bind');
+
+var _Negociacao = require('../models/Negociacao');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var NegociacaoController = function () {
+var NegociacaoController = exports.NegociacaoController = function () {
     function NegociacaoController() {
         _classCallCheck(this, NegociacaoController);
 
@@ -25,7 +46,7 @@ var NegociacaoController = function () {
             this._negociacoesView.update(model);
         });   */
 
-        this._listaNegociacoes = new Bind(new ListaNegociacoes(), new NegociacoesView($('#negociacoesView')), 'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
+        this._listaNegociacoes = new _Bind.Bind(new _ListaNegociacoes.ListaNegociacoes(), new _NegociacoesView.NegociacoesView($('#negociacoesView')), 'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
 
         // primeiro update
         // Retirado no Cap. 3.3. ----->   this._negociacoesView.update(this._listaNegociacoes);
@@ -33,9 +54,9 @@ var NegociacaoController = function () {
         // reduz o acesso ao DOM a apenas 1 vez, mesmo que ocorram 
         // 5000 negociações  
 
-        this._mensagem = new Bind(new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
+        this._mensagem = new _Bind.Bind(new _Mensagem.Mensagem(), new _MensagemView.MensagemView($('#mensagemView')), 'texto');
 
-        this._service = new NegociacaoService();
+        this._service = new _NegociacaoService.NegociacaoService();
         this._init();
     }
 
@@ -65,7 +86,7 @@ var NegociacaoController = function () {
 
             var negociacao = this._criaNegociacao();
 
-            new NegociacaoService().cadastra(negociacao).then(function (mensagem) {
+            new _NegociacaoService.NegociacaoService().cadastra(negociacao).then(function (mensagem) {
                 _this2._listaNegociacoes.adiciona(negociacao);
                 _this2._mensagem.texto = mensagem;
                 _this2._limpaFormulario();
@@ -135,13 +156,13 @@ var NegociacaoController = function () {
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                 })
                 .catch(erro => this._mensagem.texto = erro);
-              service.obterNegociacoesDaSemanaAnterior()
+             service.obterNegociacoesDaSemanaAnterior()
                 .then(negociacoes => {
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                 })
                 .catch(erro => this._mensagem.texto = erro);
-              service.obterNegociacoesDaSemanaRetrasada()
+             service.obterNegociacoesDaSemanaRetrasada()
                 .then(negociacoes => {
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                     this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
@@ -157,13 +178,13 @@ var NegociacaoController = function () {
                     return;
                 }
                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                  service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
+                 service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
                     if(erro){
                         this._mensagem.texto = erro;
                         return;
                     }
                     negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                      service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
+                     service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
                         if(erro){
                             this._mensagem.texto = erro;
                             return;
@@ -187,7 +208,7 @@ var NegociacaoController = function () {
     }, {
         key: '_criaNegociacao',
         value: function _criaNegociacao() {
-            return new Negociacao(DateHelper.textoParaData(this._inputData.value), parseInt(this._inputQuantidade.value), parseFloat(this._inputValor.value));
+            return new _Negociacao.Negociacao(_DateHelper.DateHelper.textoParaData(this._inputData.value), parseInt(this._inputQuantidade.value), parseFloat(this._inputValor.value));
         }
     }, {
         key: 'apaga',

@@ -1,3 +1,5 @@
+import {View} from './View';
+
 class NegociacoesView extends View{ 
 
     constructor(elemento){

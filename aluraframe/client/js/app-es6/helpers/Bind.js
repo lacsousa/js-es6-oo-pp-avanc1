@@ -1,4 +1,6 @@
-class Bind{
+import {ProxyFactory} from '../services/ProxyFactory';
+
+export class Bind{
 
     // ... Dessa forma é o REST Operator e não o Spread
     constructor(model, view, ...props){
