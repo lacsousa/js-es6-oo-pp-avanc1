@@ -58,7 +58,7 @@ System.register(['./View'], function (_export, _context) {
                 };
             }();
 
-            MensagemView = function (_View) {
+            _export('MensagemView', MensagemView = function (_View) {
                 _inherits(MensagemView, _View);
 
                 function MensagemView(elemento) {
@@ -84,7 +84,9 @@ System.register(['./View'], function (_export, _context) {
                 }]);
 
                 return MensagemView;
-            }(View);
+            }(View));
+
+            _export('MensagemView', MensagemView);
         }
     };
 });

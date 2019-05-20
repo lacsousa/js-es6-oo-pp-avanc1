@@ -1,4 +1,4 @@
-import {ListaNegociacoes} from '../models/ListaNegociacoes'; 
+import {ListaNegociacoes} from '../models/ListaNegociacoes';
 import {Mensagem} from '../models/Mensagem';
 import {NegociacoesView} from '../views/NegociacoesView';
 import {MensagemView} from '../views/MensagemView';
@@ -8,7 +8,7 @@ import {Bind} from '../helpers/Bind';
 import {Negociacao} from '../models/Negociacao';
 
 
-export class NegociacaoController {
+class NegociacaoController {
 
     constructor() {
 
@@ -215,4 +215,13 @@ export class NegociacaoController {
         }
         this._ordemAtual = coluna;
     }
+}
+
+
+let negociacaoController = new NegociacaoController();
+
+export function currentInstance() {
+
+    return negociacaoController;
+
 }

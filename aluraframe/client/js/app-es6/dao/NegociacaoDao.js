@@ -72,7 +72,7 @@ export class NegociacaoDao {
                 request.onerror = e => {
                     console.log(e.target.error);
                     reject('Não foi possível remover as negociações');
-                }
+                };
 
         });
     }

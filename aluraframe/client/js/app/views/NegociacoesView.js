@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['./View'], function (_export, _context) {
+System.register(['./View', '../helpers/DateHelper', '../controllers/NegociacaoController'], function (_export, _context) {
     "use strict";
 
-    var View, _createClass, NegociacoesView;
+    var View, DateHelper, currentInstance, _createClass, NegociacoesView;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -38,6 +38,10 @@ System.register(['./View'], function (_export, _context) {
     return {
         setters: [function (_View2) {
             View = _View2.View;
+        }, function (_helpersDateHelper) {
+            DateHelper = _helpersDateHelper.DateHelper;
+        }, function (_controllersNegociacaoController) {
+            currentInstance = _controllersNegociacaoController.currentInstance;
         }],
         execute: function () {
             _createClass = function () {
@@ -58,13 +62,22 @@ System.register(['./View'], function (_export, _context) {
                 };
             }();
 
-            NegociacoesView = function (_View) {
+            _export('NegociacoesView', NegociacoesView = function (_View) {
                 _inherits(NegociacoesView, _View);
 
                 function NegociacoesView(elemento) {
                     _classCallCheck(this, NegociacoesView);
 
-                    return _possibleConstructorReturn(this, (NegociacoesView.__proto__ || Object.getPrototypeOf(NegociacoesView)).call(this, elemento));
+                    var _this = _possibleConstructorReturn(this, (NegociacoesView.__proto__ || Object.getPrototypeOf(NegociacoesView)).call(this, elemento));
+
+                    elemento.addEventListener('click', function (event) {
+
+                        if (event.target.nodeName == 'TH') {
+
+                            currentInstance().ordena(event.target.textContent.toLowerCase());
+                        }
+                    });
+                    return _this;
                 }
 
                 _createClass(NegociacoesView, [{
@@ -96,7 +109,9 @@ System.register(['./View'], function (_export, _context) {
                 }]);
 
                 return NegociacoesView;
-            }(View);
+            }(View));
+
+            _export('NegociacoesView', NegociacoesView);
         }
     };
 });
