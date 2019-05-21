@@ -1,6 +1,6 @@
 'use strict';
 
-System.register(['./controllers/NegociacaoController', '../polyfill/fetch'], function (_export, _context) {
+System.register(['./controllers/NegociacaoController', './polyfill/fetch'], function (_export, _context) {
   "use strict";
 
   var currentInstance, negociacaoController;
@@ -9,7 +9,7 @@ System.register(['./controllers/NegociacaoController', '../polyfill/fetch'], fun
       currentInstance = _controllersNegociacaoController.currentInstance;
     }, function (_polyfillFetch) {}],
     execute: function () {
-      negociacaoController = new NegociacaoController();
+      negociacaoController = currentInstance();
 
 
       document.querySelector('.form').onsubmit = negociacaoController.adiciona.bind(negociacaoController);

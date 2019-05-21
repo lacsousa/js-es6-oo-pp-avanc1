@@ -145,13 +145,13 @@ System.register(['../models/ListaNegociacoes', '../models/Mensagem', '../views/N
                                 this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                             })
                             .catch(erro => this._mensagem.texto = erro);
-                          service.obterNegociacoesDaSemanaAnterior()
+                         service.obterNegociacoesDaSemanaAnterior()
                             .then(negociacoes => {
                                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                                 this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
                             })
                             .catch(erro => this._mensagem.texto = erro);
-                          service.obterNegociacoesDaSemanaRetrasada()
+                         service.obterNegociacoesDaSemanaRetrasada()
                             .then(negociacoes => {
                                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                                 this._mensagem.texto = 'Negociações da semana obtidas com sucesso!';
@@ -167,13 +167,13 @@ System.register(['../models/ListaNegociacoes', '../models/Mensagem', '../views/N
                                 return;
                             }
                             negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                              service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
+                             service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
                                 if(erro){
                                     this._mensagem.texto = erro;
                                     return;
                                 }
                                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                                  service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
+                                 service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
                                     if(erro){
                                         this._mensagem.texto = erro;
                                         return;
@@ -229,8 +229,7 @@ System.register(['../models/ListaNegociacoes', '../models/Mensagem', '../views/N
 
             negociacaoController = new NegociacaoController();
             function currentInstance() {
-
-                return negociacaoController;
+                return negociacaoController; // Singleton
             }
 
             _export('currentInstance', currentInstance);

@@ -71,9 +71,7 @@ System.register(['./View', '../helpers/DateHelper', '../controllers/NegociacaoCo
                     var _this = _possibleConstructorReturn(this, (NegociacoesView.__proto__ || Object.getPrototypeOf(NegociacoesView)).call(this, elemento));
 
                     elemento.addEventListener('click', function (event) {
-
                         if (event.target.nodeName == 'TH') {
-
                             currentInstance().ordena(event.target.textContent.toLowerCase());
                         }
                     });
@@ -85,7 +83,7 @@ System.register(['./View', '../helpers/DateHelper', '../controllers/NegociacaoCo
                     value: function template(model) {
                         // Se o retorno não fosse uma template string, não poderíamos "identar" 
                         // o código desta forma
-                        return '\n            <table class="table table-hover table-bordered">\n                <thead>\n                    <tr>\n                        <th onclick="negociacaoController.ordena(\'data\')">DATA</th>\n                        <th onclick="negociacaoController.ordena(\'quantidade\')">QUANTIDADE</th>\n                        <th onclick="negociacaoController.ordena(\'valor\')">VALOR</th>\n                        <th onclick="negociacaoController.ordena(\'volume\')">VOLUME</th>\n                    </tr>\n                </thead>\n\n                <tbody>\n                    ' + model.negociacoes.map(function (n) {
+                        return '\n            <table class="table table-hover table-bordered">\n                <thead>\n                    <tr>\n                        <th>DATA</th>\n                        <th>QUANTIDADE</th>\n                        <th>VALOR</th>\n                        <th>VOLUME</th>\n                    </tr>\n                </thead>\n\n                <tbody>\n                    ' + model.negociacoes.map(function (n) {
                             // console.log(n);
                             // return n;
                             return '\n                            <tr>\n                                <td>' + DateHelper.dataParaTexto(n.data) + '</td>\n                                <td>' + n.quantidade + '</td>\n                                <td>' + n.valor + '</td>\n                                <td>' + n.volume + '</td>\n                            </tr>\n                        ';

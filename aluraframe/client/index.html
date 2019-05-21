@@ -51,18 +51,17 @@
 
     <div id="negociacoesView"></div>
     
-    <!--<script src="js/index.js"></script> -->
     <script src="node_modules/systemjs/dist/system.js"></script>
     <!-- Quando vc usa o System Loader, não é mais necessário carregar os 
        outros scripts. Você só precisa configurar o System 
     -->
 
     <script>
-           System.defaultJSExtensions = true;
-           System.import('js/app/boot').catch(function(err){
-               console.error(err);
-           });
-    </script>
+        System.defaultJSExtensions = true; // permite omitir a extensão .js dos imports
+        System.import('js/app/boot').catch(function(err){ 
+            console.error(err);
+        });
+    </script>   
     <!-- script src="js/polyfill/fetch.js"></script>
 
     <script src="js/app/models/Negociacao.js"></script>
